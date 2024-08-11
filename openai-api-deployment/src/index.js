@@ -11,6 +11,8 @@ export default {
 	async fetch(request, env, ctx) {
 
 
+
+
 		if (request.method === 'OPTIONS') {
 			return new Response(null, {headers: corsHeaders});
 		}
@@ -20,12 +22,10 @@ export default {
 		});
 
 		try {
+			const messages = await request.json();
 			const chatCompletion = await openai.chat.completions.create({
 				model: 'gpt-4',
-				messages: [
-					{ role: 'system', content: 'You are a helpful assistant.' },
-					{ role: 'user', content: 'What is prompt injection?' },
-				],
+				messages,
 				temperature: 1.1,
 				presence_penalty: 0,
 				frequency_penalty: 0,
